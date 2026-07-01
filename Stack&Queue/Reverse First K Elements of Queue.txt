@@ -1,0 +1,104 @@
+Reverse First K Elements of Queue
+
+Problem:
+Given a queue, reverse only the first k elements while keeping the remaining elements in the same order.
+
+Example:
+Input:
+Queue = [1,2,3,4,5]
+k = 3
+
+Output:
+[3,2,1,4,5]
+
+Approach 1: Using Extra Stack + Extra Queue
+
+Idea:
+Take first k elements from the original queue and push them into a stack.
+Pop elements from the stack and insert into a new queue. (This reverses the first k elements)
+Add remaining elements from the original queue to the new queue.
+Return the new queue.
+
+queue<int> reverseFirstK(queue<int> q, int k) {
+
+    stack<int> s;
+    queue<int> q2;
+
+    int n = q.size();
+
+    // If k is greater than queue size, return original queue
+    if(k > n) {
+        return q;
+    }
+
+    // Store first k elements in stack
+    for(int i = 0; i < k; i++) {
+        s.push(q.front());
+        q.pop();
+    }
+
+    // Add reversed elements from stack
+    while(!s.empty()) {
+        q2.push(s.top());
+        s.pop();
+    }
+
+    // Add remaining queue elements
+    while(!q.empty()) {
+        q2.push(q.front());
+        q.pop();
+    }
+
+    return q2;
+}
+
+
+Complexity:
+Time: O(n)
+Space: O(n)
+(Stack + extra queue)
+
+
+
+
+Approach 2: Using Only Stack + Same Queue (Optimized)
+Idea:
+Store first k elements in a stack.
+Push stack elements back into the same queue (reversed order).
+Move remaining n-k elements from front to back to maintain their order.
+
+queue<int> reverseFirstK(queue<int> q, int k) {
+
+    int n = q.size();
+
+    // If k is greater than queue size, return original queue
+    if(k > n) {
+        return q;
+    }
+
+    stack<int> s;
+
+    // Store first k elements in stack
+    for(int i = 0; i < k; i++) {
+        s.push(q.front());
+        q.pop();
+    }
+
+    // Insert reversed elements back into queue
+    while(!s.empty()) {
+        q.push(s.top());
+        s.pop();
+    }
+
+    // Move remaining elements to the back
+    for(int i = 0; i < n-k; i++) {
+        q.push(q.front());
+        q.pop();
+    }
+
+    return q;
+}
+
+Complexity:
+Time: O(n)
+Space: O(k) (only stack is used)

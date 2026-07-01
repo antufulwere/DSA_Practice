@@ -1,0 +1,71 @@
+Queue : It is used for FIFO premciple, Example : scholershipe quanter
+
+Time complexity : IF insert from last O(1) , If remove from starting O(n)
+
+
+Implimentation :
+
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+class MyQueue{
+    int* arr;
+    int capacity;
+    int size;
+    
+    public :
+       MyQueue(int c){
+           capacity=c;
+           arr=new int[capacity];
+           size=0;
+       }
+       // enqueue : insert element in last
+       void enqueue(int x){
+           if(size==capacity){
+               cout<<"Queue Overflow";
+               return;
+           }
+           arr[size++]=x;
+       }
+       // dequeue : delete element in first
+       void dequeue(){
+           if(size==0){
+               cout<<"Queue is empty";
+               return;
+           }
+           for(int i=1;i<size;i++){
+               arr[i-1]=arr[i];
+           }
+           size--;
+       }
+       // getFront : fetch front and return
+       int getFront(){
+           if(size==0){
+               cout<<"Queue is empty";
+               return -1;
+           }
+           return arr[0];
+       }
+       // rear : get last element of queue
+       int rear(){
+           if(size==0){
+               cout<<"Queue is empty";
+               return -1;
+           }
+           return arr[size-1];
+       }
+} ;
+int main() {
+     MyQueue q(5);
+     
+     q.enqueue(1);
+     q.enqueue(2);
+     q.enqueue(3);
+     cout<<"Get front after inser 1,2,3 :"<<q.getFront()<<endl;
+     q.dequeue();
+     cout<<"Get front after calling dequeue :"<<q.getFront()<<endl;
+     cout<<"Get rear :"<<q.rear();
+    
+    return 0;
+} 

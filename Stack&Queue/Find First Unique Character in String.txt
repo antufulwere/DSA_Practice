@@ -1,0 +1,124 @@
+Problem: Find First Unique Character in String
+
+Example:
+s = "leetcode"
+
+Output: 0
+Explanation: 'l' appears only once and its index is 0
+
+Approach 1: Brute Force (Two Loops)
+
+Idea:
+For every character, check the complete string to see if it appears again.
+
+int firstUniqChar(string s) {
+
+    for(int i = 0; i < s.size(); i++) {
+
+        bool unique = true;
+
+        for(int j = 0; j < s.size(); j++) {
+
+            if(i == j)
+                continue;
+
+            if(s[i] == s[j]) {
+                unique = false;
+                break;
+            }
+        }
+
+        if(unique)
+            return i;
+    }
+
+    return -1;
+}
+Complexity:
+Time: O(n²)
+Space: O(1)
+
+
+
+Approach 2: Unordered Map + Queue
+
+Idea:
+
+Store frequency of every character using unordered_map.
+Store characters in queue to maintain insertion order.
+Remove non-unique characters from queue.
+Find index of first unique character.
+
+int firstUniqChar(string s) {
+
+    unordered_map<char,int> um;
+    queue<char> q;
+
+    for(int i = 0; i < s.size(); i++) {
+        um[s[i]]++;
+        q.push(s[i]);
+    }
+
+    while(!q.empty()) {
+
+        char ch = q.front();
+
+        if(um[ch] != 1) {
+            q.pop();
+        }
+        else {
+
+            for(int i = 0; i < s.size(); i++) {
+                if(s[i] == ch)
+                    return i;
+            }
+        }
+    }
+
+    return -1;
+}
+
+Complexity:
+Frequency calculation: O(n)
+Queue traversal: O(n)
+Finding index using loop: O(n)
+
+Total:
+
+Time: O(n)
+Space: O(n)
+
+Note: The queue is unnecessary because the string itself already maintains order.
+
+
+
+Approach 3: Unordered Map + String Traversal (Optimal)
+Idea:
+
+Count frequency of each character.
+Traverse string from left to right.
+Return first character whose frequency is 1.
+
+int firstUniqChar(string s) {
+
+    unordered_map<char,int> um;
+
+    // Count frequency
+    for(int i = 0; i < s.size(); i++) {
+        um[s[i]]++;
+    }
+
+    // Find first unique character
+    for(int i = 0; i < s.size(); i++) {
+
+        if(um[s[i]] == 1) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+Complexity:
+Time: O(n)
+Space: O(1) (because only 26 lowercase characters)

@@ -1,0 +1,90 @@
+Problem: Time Needed to Buy Tickets
+
+Problem Statement:
+There are n people in a queue. Person i wants to buy tickets[i] tickets. Each second, the person at the front buys one ticket and moves to the end of the queue if they still need tickets. Find the time when person k finishes buying tickets.
+
+Example:
+
+tickets = [2,3,2]
+k = 2
+
+Output = 6
+
+Approach 1: Queue Simulation (My First Thinking)
+Idea:
+Create a queue and store ticket counts.
+Every second:
+Take the front person.
+Decrease their ticket count by 1.
+If they still need tickets, push them back.
+Count total time.
+Problem with this approach:
+
+We need to know when person k finishes, but storing only ticket values loses the identity of each person.
+
+Example:
+
+tickets = [1,2,3]
+k = 1
+
+Queue:
+
+1,2,3
+
+After removing 1, the remaining values become:
+
+1,2
+
+Now we don't know whether 1 belongs to person 0 or person 1.
+
+So we need to store indexes, not only values.
+
+Approach 2: Queue Simulation Using Index (Correct)
+Idea:
+Store indexes 0,1,2...n-1 in the queue.
+Each second:
+Take the front index.
+Decrease its ticket count.
+If person k finishes, return time.
+Otherwise push that index back.
+Code:
+class Solution {
+public:
+    int timeRequiredToBuy(vector<int>& tickets, int k) {
+
+        queue<int> q;
+        int time = 0;
+
+        // Store person indexes
+        for(int i = 0; i < tickets.size(); i++) {
+            q.push(i);
+        }
+
+        while(!q.empty()) {
+
+            time++;
+
+            int front = q.front();
+            q.pop();
+
+            // Person buys one ticket
+            tickets[front]--;
+
+            // Person k finished buying
+            if(front == k && tickets[front] == 0) {
+                return time;
+            }
+
+            // If tickets are remaining, add back to queue
+            if(tickets[front] > 0) {
+                q.push(front);
+            }
+        }
+
+        return time;
+    }
+};
+
+Complexity
+O(total tickets)
+O(n)

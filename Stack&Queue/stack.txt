@@ -1,0 +1,84 @@
+Why Use : For LIFO or FILO algofithem , example: Book
+
+Complexity : time : O(1) and space O(n)
+
+
+Stack using array :
+
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+class myStack{
+        int capacity ;
+        int* arr;
+        int top;
+        
+ public :
+        myStack(int cap){
+            capacity=cap;
+            arr=new int[capacity];
+            top=-1;
+        }
+        
+        // push 
+        void push(int x){
+            // check stack allready full
+            if(top==capacity-1){
+                cout<<"stack overflow";
+                return ;
+            }
+            arr[++top]=x;
+        }
+        
+        // pop
+        int pop(){
+            // check if stack is empty
+            if(top==-1){
+                cout<<"stack is undeflow";
+                return -1;
+            }
+            return arr[--top];
+        }
+        
+        // print stack
+        void printStack(){
+            for(int i=0;i<=top;i++){
+                cout<<arr[i]<<" ";
+            }
+        }
+        
+        // check stack is full
+        void checkFull(){
+            if(top==capacity-1){
+                cout<<"stack is full";
+                return ;
+            }
+            return;
+        }
+        
+        // stack peek element
+        int peek(){
+            if(top==-1){
+                cout<<"stack is empty";
+                return -1;
+            }
+            return arr[top];
+        }
+};
+    
+int main() {
+    myStack st(5);
+    
+    st.push(1);
+    st.push(2);
+    st.push(3);
+    st.push(4);
+    st.push(5);
+    // st.push(6);
+    // st.pop();
+    st.printStack();
+    st.checkFull();
+    cout<<st.peek();
+    return 0;
+}
