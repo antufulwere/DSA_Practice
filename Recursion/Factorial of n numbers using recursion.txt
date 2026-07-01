@@ -1,0 +1,17 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <vector>
+#include<queue>
+
+using namespace std;
+
+int fun(int n){
+    if(n==0){
+        return 1;
+    }
+    return n*fun(n-1);
+}
+int main() {
+    cout<<fun(5);
+    return 0;
+}

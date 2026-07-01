@@ -1,0 +1,29 @@
+Problem: Print n to 1 and 1 to n using recursion
+
+Expectation:
+fun(5) should print:
+
+5 4 3 2 1 1 2 3 4 5
+
+Think:
+
+fun(4) already gives:
+4 3 2 1 1 2 3 4
+So we only need to print 5 before and after fun(4).
+Code:
+void fun(int n){
+    if(n == 0)
+        return;
+
+    cout << n << " ";  // before recursion
+
+    fun(n-1);
+
+    cout << n << " ";  // after recursion
+}
+Logic:
+fun(5)
+= print 5 + fun(4) + print 5
+
+First print → recursion going down
+Second print → recursion coming back (backtracking)
