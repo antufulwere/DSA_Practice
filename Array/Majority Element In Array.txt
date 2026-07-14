@@ -1,0 +1,35 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+int majorityEle(vector<int> &x){
+    // check bae case if vector size 1 return 0th element 
+    if(x.size()==1){
+    return x[0];
+    }
+
+    // create map to store elemenst frquancy 
+    unordered_map<int,int> um;
+ 
+    for(int i:x){
+        int value=um[i];
+        //  cout<<value<<" ";
+        if(value){
+            if(value>=x.size()/2){
+                return i;
+            }
+            um[i]=value+1;
+        }else{
+        um[i]=1;
+        }
+    }
+  return -1;
+}
+
+int main() {
+    vector<int> x={2,2,1,1,1,2,2};
+    cout<<fun(x);
+    return 0;
+}

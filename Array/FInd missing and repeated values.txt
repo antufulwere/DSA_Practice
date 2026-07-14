@@ -1,0 +1,63 @@
+// create hash map and check frequ which is missing and which is repeat
+
+class Solution {
+public:
+    vector<int> findMissingAndRepeatedValues(vector<vector<int>>& v) {
+            vector<int> fv(2);
+            unordered_map<int,int> um;
+            int size = v.size()*v[0].size();
+
+            // set default value 0 i map size of array * size of 0th element
+            // for(int i =1;i<=size;i++){
+            //     um[i]=0;
+            // }
+            // calculate elemenst friquency
+            for(auto item : v){
+                for(auto i : item){
+                    if(um[i])
+                        um[i]=um[i]+1;
+                    else
+                        um[i]=1;
+                }
+            }
+            // add and in new vector 
+            for(int it=1;it<=size;it++){
+                if(um[it]==0)
+                    fv[1]=it;
+                if(um[it]==2)
+                    fv[0]=it;
+            }
+            return fv;
+    }
+};
+
+
+
+Optimized Version :
+
+Same logic just optimized code 
+
+class Solution {
+public:
+    vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
+            int missing= -1;int repeat=-1;
+            unordered_map<int,int> freq;
+            int size = grid.size()*grid.size();
+            // calculate elemenst friquency
+            for(auto row : grid){
+                for(int item : row){
+                        freq[item]++;
+                }
+            }
+            // add and in new vector 
+            for(int it=1;it<=size;it++){
+                if(!freq[it]){
+                    missing=it;
+                }
+                if(freq[it]==2){
+                    repeat=it;
+                }
+            }
+            return {repeat,missing};
+    }
+};
