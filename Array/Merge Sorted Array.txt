@@ -1,0 +1,63 @@
+Not completed yet start frm here 
+chat gpt linkt : https://chatgpt.com/share/6a55b99c-026c-83ee-bcdb-acc1eaee4aba
+
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+ void merge(vector<int>& nums1,vector<int>& nums2,int n, int m ) {
+   int i=0;int j=0;int itr=0;
+  while(n+m>itr){
+     if(n==0 || m==0){
+          break;
+      }
+     if(nums1[i]<nums2[j]){
+         nums1[itr]=nums1[i];
+         i++;n--;
+     }else{
+         nums1[itr]=nums2[j];
+         j++;m--;
+     }
+     itr++;   
+  }
+  
+  // check if n exist 
+  if(n){
+      while(n>0){
+          nums1.push_back(nums1[i]);
+          i++;n--;
+      }
+  }else if(m){
+      while(n>0){
+          nums1.push_back(nums2[j]);
+          j++;m--;
+      }
+  }
+   
+//     cout<<nums1.size()<<"-------------11";
+   
+  for(int num : nums1){
+      cout<<num<<" ";
+  }
+   
+ }
+    
+int main()
+{
+    vector<int> nums1 = {1,2,3,0,0,0};
+    int m = 3;
+    vector<int> nums2 = {2,5,6};
+    int n = 3;
+    merge(nums1,nums2,n,m);
+
+    return 0;
+}

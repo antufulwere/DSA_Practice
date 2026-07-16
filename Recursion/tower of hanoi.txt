@@ -1,0 +1,66 @@
+Tower of Hanoi (TOH)
+
+We need to mainly focus on faith. Just keep faith in mind every time.
+
+Problem
+
+If n = 3, we have three towers: A, B, and C.
+
+We want to move all discs from A to B while following the rules.
+
+Rules
+Only one disc can be moved at a time.
+A larger disc can never be placed on a smaller disc.
+Expectation
+
+We need to print all the movements of the discs.
+
+toh(n, tb1, tb2, tb3);
+Faith
+
+We assume that for n-1, the function has already printed all the required statements and moved the n-1 discs from tb1 to tb3.
+
+(Why tb3? Because to move the largest disc from A to B, the top n-1 discs must first be moved from A to C.)
+
+toh(n-1, tb1, tb3, tb2);
+
+
+Finally, connect Faith to Expectation
+toh(n-1, tb1, tb3, tb2);   // Move first n-1 discs from A to C
+
+cout << n << " " << tb1 << " move to " << tb2 << endl;   // Move the largest disc
+
+toh(n-1, tb3, tb2, tb1);   // Move n-1 discs from C to B
+
+Implimentation :
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+void toh(int n,char tb1, char tb2,char tb3){
+    if(n==0){
+        return ;
+    }
+    
+    toh(n-1,tb1,tb3,tb2);
+    cout<<n<<" "<<tb1<<" move to "<<tb2<<endl;
+    toh(n-1,tb3,tb2,tb1);
+}
+
+int main()
+{
+    int n=12;
+    char tb1='A';
+    char tb2='B';
+    char tb3='C';
+    toh(n,tb1,tb2,tb3);
+    return 0;
+}
