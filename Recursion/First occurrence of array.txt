@@ -1,0 +1,52 @@
+# First Occurrence of an Array Element
+
+## First Approach
+
+We can check the target element recursively. If it exists, return its index; otherwise, return `-1`.
+
+> **Note:** This approach is not the best because even after finding the element, the recursive calls continue until the end of the array before returning the result.
+
+```cpp
+int firstOccurrence(vector<int> &arr, int idx, int val) {
+
+    if (idx == arr.size()) {
+        return 0;
+    }
+
+    if (arr[idx] == val) {
+        return idx;
+    }
+
+    int fidx = firstOccurrence(arr, idx + 1, val);
+
+    if (fidx) {
+        return fidx;
+    } else {
+        return -1;
+    }
+}
+```
+
+---
+
+## Second Approach (Best)
+
+Since we need to find the **first occurrence**, we check the array from the beginning. As soon as the target element is found, return its index immediately. Otherwise, continue the recursive call.
+
+This is better because it returns as soon as the first occurrence is found.
+
+```cpp
+int firstOccurrence(vector<int> &arr, int idx, int val) {
+
+    if (idx == arr.size()) {
+        return -1;
+    }
+
+    if (arr[idx] == val) {
+        return idx;
+    } else {
+        int sidx = firstOccurrence(arr, idx + 1, val);
+        return sidx;
+    }
+}
+```
