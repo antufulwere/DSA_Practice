@@ -1,0 +1,99 @@
+Problem: Best Time to Buy and Sell Stock
+
+
+1st Approach
+
+Find the smallest element first. After that element, compare it with all upcoming elements and check which difference is maximum. That maximum difference will be our maximum profit.
+
+Code
+#include <iostream>
+#include <vector>
+#include <climits>
+
+using namespace std;
+
+int buySell(vector<int> &arr){
+    int small = INT_MAX;
+
+    for(int item : arr){
+        small = min(item, small);
+    }
+
+    int maxBuy = INT_MIN;
+    int flag = 0;
+
+    for(int day = 0; day < arr.size(); day++){
+        if(flag || arr[day] == small){
+            maxBuy = max(maxBuy, arr[day] - small);
+            flag = 1;
+        }
+    }
+
+    return maxBuy;
+}
+
+int main()
+{
+    vector<int> arr = {2,4,1};
+    cout << buySell(arr);
+    return 0;
+}
+
+
+Issue in this approach
+
+This approach fails when the smallest element is at the end of the array, but there is already a profitable buy/sell opportunity before it.
+
+Example:
+
+[2,4,1]
+
+Here, the smallest element (1) is on the last day, so the code returns 0. However, we can still make a profit by buying at 2 and selling at 4, giving a profit of 2.
+
+2nd Approach (Best)
+
+Take two variables:
+
+buy = arr[0]
+profit = 0
+
+Traverse the array starting from index 1.
+
+If the current price is smaller than buy, update buy.
+Otherwise, check if the difference between the current price and buy is greater than profit. If yes, update profit.
+
+This works because, at every step, buy always stores the minimum price seen before the current day, ensuring that buying always happens before selling.
+
+Code
+#include <iostream>
+#include <vector>
+#include <climits>
+
+using namespace std;
+
+int buySell(vector<int> &arr){
+    int buy = arr[0];
+    int profit = 0;
+
+    for(int item = 1; item < arr.size(); item++){
+        if(buy > arr[item]){
+            buy = arr[item];
+        }
+        else if(profit < (arr[item] - buy)){
+            profit = arr[item] - buy;
+        }
+    }
+
+    return profit;
+}
+
+int main()
+{
+    vector<int> arr = {2,4,1,6};
+    cout << buySell(arr);
+    return 0;
+}
+
+Time Complexity: O(n)
+
+Space Complexity: O(1)

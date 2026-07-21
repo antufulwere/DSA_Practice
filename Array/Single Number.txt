@@ -1,0 +1,25 @@
+Single Number : Only one thing XOR to solve this proble in o(1) space complecity.
+
+In XOR when same value comes result 0 ex: 2^2=0
+When value with 0 result value ex: 0^2=2
+
+Code :
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int uniqeNo(vector<int> &arr){
+    int sum=0;
+    for(int item : arr){
+        sum=sum^item;
+        cout<<"Sum :"<<sum<<endl;
+    }
+    return sum;
+}
+int main()
+{
+    vector<int> arr={2,1,2,5}; 
+    cout<<uniqeNo(arr);
+    return 0;
+}
