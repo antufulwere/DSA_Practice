@@ -1,0 +1,103 @@
+Problem: Pow(x, n)
+
+1st Approach
+Run the recursive function and multiply x by itself n times.
+
+Example:
+2^5 = 2 * 2 * 2 * 2 * 2
+
+Complexity
+Time Complexity: O(n)
+Space Complexity: O(n) (recursive call stack)
+
+This approach works, but for very large values of n (like on LeetCode), it causes Time Limit Exceeded (TLE) or stack overflow because the recursion runs linearly.
+
+Code :
+#include <iostream>
+using namespace std;
+
+double power(double x, int n) {
+    if (n == 0) {
+        return 1.0;
+    }
+
+    return x * power(x, n - 1);
+}
+
+int main() {
+    double x = 2;
+    int n = 5;
+
+    cout << power(x, n);
+    return 0;
+}
+
+
+2nd Approach (Binary Exponentiation - Iterative)
+Instead of multiplying x n times, think of n in its binary representation.
+
+Example:
+2^5
+5 in binary = 101
+
+Traverse the binary representation of n.
+
+If the current bit is 1, multiply the current power of x into the answer.
+If the current bit is 0, skip the multiplication.
+In every iteration, square x and move to the next bit by dividing n by 2.
+
+This reduces the number of iterations to log₂(n).
+
+Complexity
+Time Complexity: O(log n)
+Space Complexity: O(1)
+Code
+class Solution {
+public:
+    double myPow(double x, int n) {
+
+        long long binaryForm = n;
+
+        if (binaryForm < 0) {
+            x = 1 / x;
+            binaryForm = -binaryForm;
+        }
+
+        double ans = 1;
+
+        while (binaryForm > 0) {
+
+            if (binaryForm % 2 == 1) {
+                ans *= x;
+            }
+
+            x *= x;
+            binaryForm /= 2;
+        }
+
+        return ans;
+    }
+};
+3rd Approach (Idea)
+
+In the first recursive approach, we reduce the exponent by 1 in every recursive call.
+
+power(x, 8)
+→ power(x, 7)
+→ power(x, 6)
+→ ...
+→ power(x, 0)
+
+Can we reduce the exponent by half instead?
+
+Using the mathematical property:
+
+If n is even:
+
+x^n = (x^(n/2)) × (x^(n/2))
+
+For odd powers:
+
+x^n = (x^(n/2)) × (x^(n/2)) × x
+
+So instead of reducing n by 1, we reduce it by 2 each time, which gives a recursive solution with O(log n) time complexity.
