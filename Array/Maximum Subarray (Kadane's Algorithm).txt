@@ -1,0 +1,128 @@
+# Problem: Maximum Subarray (Kadane's Algorithm)
+
+## Approach 1: Check all possible subarrays
+
+We can generate all possible subarrays, calculate the sum of each subarray, and keep track of the maximum sum.
+
+**Issue:**
+This approach takes **O(n³)** time because:
+
+* First loop selects the starting index.
+* Second loop selects the ending index.
+* Third loop calculates the sum of the selected subarray.
+
+This will result in a **Time Limit Exceeded (TLE)** for large inputs.
+
+### Code
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+int fun(vector<int> &arr){
+    int size = arr.size();
+
+    if(size == 1){
+        return arr[0];
+    }
+
+    int maxval = INT_MIN;
+
+    for(int i = 0; i < size; i++){
+        maxval = max(arr[i], maxval);
+
+        for(int j = i + 1; j < size; j++){
+            int sum = 0;
+
+            for(int k = i; k <= j; k++){
+                sum += arr[k];
+            }
+
+            maxval = max(sum, maxval);
+        }
+    }
+
+    return maxval;
+}
+
+int main(){
+    vector<int> arr = {-2, 1, -3, 4};
+
+    cout << fun(arr) << endl;
+
+    return 0;
+}
+```
+
+---
+
+# Approach 2: Kadane's Algorithm (O(n))
+
+Instead of checking every subarray, we can process the array in a single pass.
+
+We use two variables:
+
+* **sum** → Stores the maximum sum of a subarray **ending at the current index**.
+* **best** → Stores the maximum subarray sum found in the entire array.
+
+At every index, we have only two choices:
+
+1. **Continue** the current subarray by adding the current element.
+2. **Start a new subarray** from the current element.
+
+If `sum + arr[i]` is greater than `arr[i]`, continue the current subarray.
+
+Otherwise, start a new subarray from `arr[i]`.
+
+After updating `sum`, compare it with `best` and update `best` if needed.
+
+### Time Complexity
+
+* **O(n)**
+
+### Space Complexity
+
+* **O(1)**
+
+### Code
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+int fun(vector<int> &arr){
+
+    int size = arr.size();
+
+    int sum = arr[0];
+    int best = arr[0];
+
+    for(int i = 1; i < size; i++){
+
+        // Continue the current subarray or start a new one
+        if(sum + arr[i] > arr[i]){
+            sum += arr[i];
+        }else{
+            sum = arr[i];
+        }
+
+        // Update the overall maximum subarray sum
+        best = max(best, sum);
+    }
+
+    return best;
+}
+
+int main(){
+
+    vector<int> arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+
+    cout << fun(arr) << endl;
+
+    return 0;
+}
+```
